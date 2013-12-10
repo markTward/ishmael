@@ -1,0 +1,21 @@
+<!doctype html>
+{% block head %}
+<title>Welcome | Ishmael (A Malware Identification Service)</title>
+<meta charset=utf-8>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<script type=text/javascript
+  src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+{% endblock %}
+<div class=box>
+  {% block body_title %}
+<h1>{{ self.title() }}</h1>
+  {% endblock %}
+  <p class=nav>
+    <a href="{{ url_for('index') }}">Overview</a> //
+  {% for message in get_flashed_messages() %}
+    <p class=message>{{ message }}
+  {% endfor %}
+  {% block body %}{% endblock %}
+  <p class=footer>
+    &copy; Copyright 2013 by MTWard</a>
+</div>

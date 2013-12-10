@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block head %}
+	{{ super() }}
+{% endblock %}
+
+{% block body_title %}
+{% endblock %}
+
+{% block body %}
+	<h1>Ishmael</h1>
+	<h2>A Malware Identification Service</h2>
+	<blockquote>
+	Ishmael is a friendly malware identification service with a small collection of RESTful resources.
+	</blockquote>
+
+	<p class=latestver>
+		<strong>API Current Version: 1.0</strong>
+
+	<h2>Identification by Absolute Path Reference</h2>
+	<pre><span class=ig>
+TODO: 
+http://ishmael.com/urlinfo/1/path/[netloc.path?qs]
+
+Return zero or one references
+Sample Result:
+{'data':{}
+ 'code': ... }
+
+</span></pre>
+
+{% endblock %}
