@@ -26,28 +26,14 @@ def get_urlinfo_by_path(urlpath, **kwargs):
     # initialize record set
     record_set = {}
 
-    # query database
-    if 'search' in kwargs and kwargs['search'] == True:
-        # open search
-        if 'qs' in kwargs and len(kwargs['qs']) > 0:
-            app.logger.debug('dbservice: open search by urlDEPTH and qsLIST')
-            # positive match for any depth of url netloc, path and any number of query string members
-            record_set = url_coll.find({'urlDEPTH' : (netloc + path), 'qsLIST' : {'$all' :  make_qs_list(kwargs['qs'])}})
-        else:
-            app.logger.debug('dbservice: open search by urlDEPTH')
-            # positive match for any depth of url netloc, path
-            record_set = url_coll.find({'urlDEPTH' : (netloc + path) })
+    # query database by exact search
+    if 'qs' in kwargs and len(kwargs['qs']) > 0:
+        # exact search on complete url netloc, path and all query string members
+        record_set = url_coll.find({'netloc' : netloc, 'path' : path, 'qs' : qs_sort(kwargs['qs']) })
     else:
-        # exact search
-        if 'qs' in kwargs and len(kwargs['qs']) > 0:
-            app.logger.debug('dbservice: exact search by netloc, path and qs')
-            # exact search on complete url netloc, path and all query string members
-            record_set = url_coll.find({'netloc' : netloc, 'path' : path, 'qs' : qs_sort(kwargs['qs']) })
-        else:
-            # exact search on complete url netloc, path; no query string so restrict results
-            app.logger.debug('dbservice: exact search by netloc, path; exclude qs')
-            record_set = url_coll.find({'netloc' : netloc, 'path' : path,  'qs' : {'$exists':False}})
-
+        # exact search on complete url netloc, path; no query string so restrict results
+        app.logger.debug('dbservice: exact search by netloc, path; exclude qs')
+        record_set = url_coll.find({'netloc' : netloc, 'path' : path,  'qs' : {'$exists':False}})
     return record_set
 
 # Find an exact match
