@@ -23,5 +23,4 @@ from ishmael.views import restapi_home
 from ishmael.views import restapi_id
 from ishmael.views import restapi_util
 
-# error & exceptions
 from ishmael import error
