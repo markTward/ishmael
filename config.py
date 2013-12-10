@@ -32,6 +32,7 @@ class ConfigDev(Config):
 
 class ConfigDevFM(ConfigDev):
     DEBUG = False
+    USE_SSLIFY = False
 
 class ConfigStg(Config):
     #Flask App

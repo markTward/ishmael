@@ -1,2 +1,3 @@
 from ishmael import app
-app.run(debug=app.debug)
+if __name__ == "__main__":
+	app.run(debug=app.debug)
