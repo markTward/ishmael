@@ -30,6 +30,9 @@ class ConfigDev(Config):
     MONGODB_DB = 'malwaredb'
     MONGODB_URLS = 'urls'
 
+class ConfigDevFM(ConfigDev):
+    DEBUG = False
+
 class ConfigStg(Config):
     #Flask App
     USE_SSLIFY = True
