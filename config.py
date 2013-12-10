@@ -39,7 +39,7 @@ class ConfigStg(Config):
 
     # Database service sources and settings
     MONGODB_URI = os.environ.get('MONGOHQ_URL')
-    MONGODB_DB = 'app19786004'
+    MONGODB_DB = 'app20251520'
     MONGODB_URLS = 'urls'
 
 class ConfigProd(Config):
