@@ -3,6 +3,7 @@
 from flask import request, make_response
 from ishmael import app
 from functools import update_wrapper
+import urlparse
 import datetime
 
 # utility function delivering restful response shell

@@ -22,6 +22,7 @@ from ishmael.views import general
 from ishmael.views import restapi_home
 from ishmael.views import restapi_id
 from ishmael.views import restapi_path
+from ishmael.views import restapi_search
 from ishmael.views import restapi_util
 
 from ishmael import error
