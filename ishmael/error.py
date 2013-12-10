@@ -17,10 +17,5 @@ def http_status_404(error=None):
 		rest_response = get_response_template(httplib.NOT_FOUND, 'fail', None)
 		rest_response['data'] = None
 		rest_response['message'] = error.name
-		rest_response['request.url_charset'] = request.url_charset
-		rest_response['request.mimetype'] = request.mimetype
-		rest_response['request.is_multhread'] = request.is_multithread
-		rest_response['request.user_agent'] = str(request.user_agent)
-		rest_response['request.accept_mimetypes'] = str(request.accept_mimetypes.values())
 		return make_response(jsonify(rest_response), httplib.NOT_FOUND)
 	return render_template('404.html')

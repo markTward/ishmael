@@ -21,6 +21,7 @@ app.url_map.add(Rule('/index', endpoint='index'))
 from ishmael.views import general
 from ishmael.views import restapi_home
 from ishmael.views import restapi_id
+from ishmael.views import restapi_path
 from ishmael.views import restapi_util
 
 from ishmael import error

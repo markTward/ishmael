@@ -25,9 +25,9 @@ def get_urlinfo_home(api_version):
 
     # generate valid urls and instructions for accessing API
     rest_response['data'] = {'_links':[
-#        {'rel':'path',
-#        'href':url_for('find_urlinfo_by_path', api_version=app.config['API_VERSION_CURRENT'], path='', _external=True),
-#        'message':'search for an exact match on the URL path and query string.  returns 0 or 1 record.'},
+        {'rel':'path',
+        'href':url_for('find_urlinfo_by_path', api_version=app.config['API_VERSION_CURRENT'], path='', _external=True),
+        'message':'search for an exact match on the URL path and query string.  returns 0 or 1 record.'},
 #        {'rel':'search',
 #        'href':url_for('search_urlinfo_by_path', api_version=app.config['API_VERSION_CURRENT'], path='', _external=True),
 #        'message':'search for a general match on the URL host, port and path.  returns 0, 1 or many records.'},
