@@ -136,6 +136,8 @@ def make_urls(n):
                         qsrandom = random.choice(range(0,4))
                         for nargs in range(0,qsrandom):
                            # force unicode (for sanity)
+                           #k = id_gen_basic(random.choice(range(1,2))).encode('utf8')
+                           #v = id_gen_qs_val(random.choice(range(1,2))).encode('utf8')
                            k = id_gen_basic(random.choice(range(1,9))).encode('utf8')
                            v = id_gen_qs_val(random.choice(range(1,9))).encode('utf8')
                            qs_dict[k] = v
