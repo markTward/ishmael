@@ -75,7 +75,6 @@ def create_url(coll, netloc, path, qs, is_malware, cdate, vdate):
     # prep a new pentry
     newentry = {'netloc' : up.netloc.lower(),
                 'path' : up.path,
-                'urlDEPTH' : make_url_array(up.netloc.lower() + up.path),
                 'urlfull' : up.netloc.lower() + up.path,
                 'created' : cdate,
                 'is_malware' : is_malware}

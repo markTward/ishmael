@@ -12,6 +12,7 @@ import os
 import httplib
 import urllib
 import urlparse
+import re
 
 # search mongodb by netloc, path and/or query string
 def get_urlinfo_by_path(urlpath, **kwargs):
@@ -26,18 +27,23 @@ def get_urlinfo_by_path(urlpath, **kwargs):
     # initialize record set
     record_set = {}
 
+    # prepare regex of url for search
+    url_regx = '^' + re.escape(netloc + path)
+    
     # query database
     if 'search' in kwargs and kwargs['search'] == True:
         # open search
         if 'qs' in kwargs and len(kwargs['qs']) > 0:
-            app.logger.debug('dbservice: open search by urlDEPTH and qsLIST')
-            app.logger.debug(str(make_qs_list(kwargs['qs'])))
+            app.logger.debug('dbservice: open search on urlfull and qsLIST')
+            app.logger.debug('urlfull:$regex : ' + str(url_regx) + ', ' + 'qsLIST:$all' + str(make_qs_list(kwargs['qs'])))
+
             # positive match for any depth of url netloc, path and any number of query string members
-            record_set = url_coll.find({'urlDEPTH' : (netloc + path), 'qsLIST' : {'$all' :  make_qs_list(kwargs['qs'])}})
+            record_set = url_coll.find({'urlfull' : {'$regex':url_regx}, 'qsLIST' : {'$all' :  make_qs_list(kwargs['qs'])}})
         else:
-            app.logger.debug('dbservice: open search by urlDEPTH')
+            app.logger.debug('dbservice: open search by urlfull')
+            app.logger.debug('urlfull:$regex : ' + str(url_regx))
             # positive match for any depth of url netloc, path
-            record_set = url_coll.find({'urlDEPTH' : (netloc + path) })
+            record_set = url_coll.find({'urlfull' : {'$regex':url_regx}})
     return record_set
 
 # Search for all records matching host, port and path criteria

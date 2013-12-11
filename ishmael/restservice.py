@@ -58,7 +58,7 @@ def get_urlinfo(api_version, urlfunc, urlkey, **kwargs):
 # Create simple jsend-like response
 def make_success_data(version, record_set):
 	# raw db fields to be excluded from payload
-	exclude_from_payload = ['_id','netloc', 'path', 'urlDEPTH','qs','qsLIST']
+	exclude_from_payload = ['_id'] if app.config['DEBUG'] else ['_id','netloc', 'path', 'urlfull','qs','qsLIST']
 
 	# set common response elements
 	data = {'record_count' : record_set.count()}
