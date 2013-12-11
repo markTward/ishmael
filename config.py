@@ -21,7 +21,6 @@ class Config(object):
 class ConfigDev(Config):
     # Flask App
     DEBUG = True
-    TESTING = True
     TRAP_BAD_REQUEST_ERRORS = True
     USE_SSLIFY = False
 
@@ -29,10 +28,6 @@ class ConfigDev(Config):
     MONGODB_URI = os.environ.get('ISHMAEL_MONGODB_URI', 'mongodb://localhost:27017/')
     MONGODB_DB = 'malwaredb'
     MONGODB_URLS = 'urls'
-
-class ConfigDevFM(ConfigDev):
-    DEBUG = False
-    USE_SSLIFY = False
 
 class ConfigStg(Config):
     #Flask App
@@ -46,4 +41,15 @@ class ConfigStg(Config):
 class ConfigProd(Config):
     pass
 
+class ConfigTest(Config):
+    TESTING = True
+    
+class ConfigPyDev(ConfigDev):
+    DEBUG_WITH_APTANA = True
+
+# heroku foreman 
+class ConfigDevFm(ConfigDev):
+    DEBUG = False
+
 del os
+
