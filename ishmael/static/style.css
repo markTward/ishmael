@@ -35,3 +35,5 @@ th           { background: #eee; font-weight: normal; }
 
 td input     { border: none; padding: 0; }
 
+.latestver          { margin: 20px 0 0 0; text-align:left; font-style: italic; }
+.latestver strong   { font-weight: bold; }
