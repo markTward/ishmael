@@ -1,4 +1,5 @@
 from ishmael import app
+
 if __name__ == "__main__":
 	# Flask debugger by default
 	if app.debug: use_debugger = True

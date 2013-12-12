@@ -10,7 +10,6 @@ from ishmael.utils import get_response_template, tailor_app_http_headers, make_q
 
 import os
 import httplib
-import urllib
 import urlparse
 
 # search mongodb by netloc, path and/or query string
