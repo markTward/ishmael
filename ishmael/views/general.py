@@ -16,10 +16,9 @@ def index():
 	# provide a sample ishmael json response
 	rest_response, rest_response_code = \
 		get_urlinfo(app.config['API_VERSION_CURRENT'], \
-		restapi_path.get_urlinfo_by_path, 'melville.io/helloishmael', qs='', \
+		restapi_path.get_urlinfo_by_path, 'melville.io/helloishmael', qs='call=me', \
 		search=False)
 
-	#app.logger.debug('example url ==> ' + str(example_ishmael_url))
 	return render_template('index.html', results=json.dumps(rest_response, sort_keys=True, indent=3, default=json_util.default))
 
 # Show Flask configuration vars. DEBUG ONLY!
