@@ -34,14 +34,12 @@ def get_urlinfo_by_path(urlpath, **kwargs):
     if 'search' in kwargs and kwargs['search'] == True:
         # open search
         if 'qs' in kwargs and len(kwargs['qs']) > 0:
-            app.logger.debug('dbservice: open search on urlfull and qsLIST')
-            app.logger.debug('urlfull:$regex : ' + str(url_regx) + ', ' + 'qsLIST:$all' + str(make_qs_list(kwargs['qs'])))
+            app.logger.debug('search query ==> {urlfull : {$regex : /' + str(url_regx) + '/}, ' + 'qsLIST:{$all : ' + str(make_qs_list(kwargs['qs'])) + '}}')
 
             # positive match for any depth of url netloc, path and any number of query string members
             record_set = url_coll.find({'urlfull' : {'$regex':url_regx}, 'qsLIST' : {'$all' :  make_qs_list(kwargs['qs'])}})
         else:
-            app.logger.debug('dbservice: open search by urlfull')
-            app.logger.debug('urlfull:$regex : ' + str(url_regx))
+            app.logger.debug('search query ==> {urlfull : {$regex : /' + str(url_regx) + '/}}')
             # positive match for any depth of url netloc, path
             record_set = url_coll.find({'urlfull' : {'$regex':url_regx}})
     return record_set

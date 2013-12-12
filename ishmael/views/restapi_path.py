@@ -29,10 +29,11 @@ def get_urlinfo_by_path(urlpath, **kwargs):
     # query database by exact search
     if 'qs' in kwargs and len(kwargs['qs']) > 0:
         # exact search on complete url netloc, path and all query string members
+        app.logger.debug('path query ==> {netloc : \'' + netloc + '\', path : \'' + path + '\', qs : \'' + str(qs_sort(kwargs['qs'])) + '\'}')
         record_set = url_coll.find({'netloc' : netloc, 'path' : path, 'qs' : qs_sort(kwargs['qs']) })
     else:
         # exact search on complete url netloc, path; no query string so restrict results
-        app.logger.debug('dbservice: exact search by netloc, path; exclude qs')
+        app.logger.debug('path query ==> {netloc : \'' + netloc + '\', path : \'' + path + '\', qs : {$exists : false}}')
         record_set = url_coll.find({'netloc' : netloc, 'path' : path,  'qs' : {'$exists':False}})
     return record_set
 

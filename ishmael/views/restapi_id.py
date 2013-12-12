@@ -14,6 +14,7 @@ from ishmael.utils import get_response_template, tailor_app_http_headers
 # search mongodb by internal id
 def get_urlinfo_by_id(id):
     url_coll = get_mongodb_db_collection(app.config['MONGODB_URLS'])
+    app.logger.debug('_id query ==> {\'_id\' : ObjectId(\'' + str(id) + '\')}')
     record_set = {}
     record_set = url_coll.find({'_id' : ObjectId(id)})
     return record_set
