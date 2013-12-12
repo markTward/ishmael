@@ -8,10 +8,10 @@ def get_mongodb_client():
 	if not hasattr(app, 'mdb_client'):
 		try:
 			app.mdb_client = MongoClient(app.config['MONGODB_URI'])
-			print ' * ' + __name__ + '.' + inspect.stack()[0][3] + ' : SUCCESS: MongoClient() established' 
+			app.logger.debug(inspect.stack()[0][3] + ' : SUCCESS: MongoClient() established')
 			return app.mdb_client
 		except:
-			print ' * ' + __name__ + '.' + inspect.stack()[0][3] + ' : ERROR: MongoClient() not established' 
+			app.logger.debug(inspect.stack()[0][3] + ' : ERROR: MongoClient() not established')
 
 # attempt to get a mongodb collection
 def get_mongodb_db_collection(collection):

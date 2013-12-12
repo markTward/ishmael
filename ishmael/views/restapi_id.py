@@ -25,7 +25,6 @@ def get_urlinfo_by_id(id):
 def find_urlinfo_by_id(api_version, urlid):
 	if api_version not in app.config['API_VERSION_ACTIVE']: abort(httplib.NOT_FOUND)
 	rest_response, rest_response_code = get_urlinfo(api_version, get_urlinfo_by_id, urlid)
-	print 'find_urlinfo just before RETURN'
 	return make_response(jsonify(rest_response), rest_response_code)
 
 # Error response when no id is entered

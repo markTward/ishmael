@@ -17,16 +17,62 @@
 		<strong>API Current Version: 
 		<a href="{{ url_for('get_urlinfo_home', api_version=config['API_VERSION_CURRENT'])}}">{{config['API_VERSION_CURRENT']}}</a></strong>
 
-	<h2>Identification by Absolute Path Reference</h2>
+	<h2>Query Using Exact Path and Parameters</h2>
 	<pre><span class=ig>
-TODO: 
-http://ishmael.com/urlinfo/1/path/[netloc.path?qs]
+General Form:
+{{request.host_url.rstrip('/')}}{{url_for('find_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = '')}}[netloc/path?query_string]
 
-Return zero or one references
-Sample Result:
-{'data':{}
- 'code': ... }
+<ul>Definitions:
+<li>netloc is case-insensitive and includes host:port
+<li>path is case-sensitive
+<li>key=value parameters are case-sensitive and order independent
+</ul>
 
+<ul>Examples:
+<li><a href="{{request.host_url.rstrip('/')}}{{url_for('find_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = '')}}melville.io/helloishmael?call=me">Call Me Ishmael.</a>
+<li>ex2
+<li>ex3
+</ul>
+</span></pre>
+
+	<h2>Search Using Partial Path and Parameters</h2>
+	<pre><span class=ig>
+General Form:
+{{request.host_url.rstrip('/')}}{{url_for('search_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = '')}}[netloc/path?query_string]
+
+<ul>Definitions:
+<li>netloc is case-insensitive and includes host and optionally port
+<li>path is case-sensitive and can be to any directory depth (optional)
+<li>key=value parameters are case-sensitive, order independent, and any number of pairs (optional)
+</ul>
+
+<ul>Examples:
+<li>ex1
+<li>ex2
+<li>ex3
+</ul>
+</span></pre>
+
+	<h2>Search Using Ishmael Identifier</h2>
+	<pre><span class=ig>
+General Form:
+{{request.host_url.rstrip('/')}}{{url_for('find_urlinfo_by_id', api_version=config['API_VERSION_CURRENT'], urlid = '')}}[id]
+
+<ul>Definitions:
+<li>id is provided via 'self' links when a query has matched an Ishmael record
+</ul>
+
+<ul>Examples:
+<li>ex1
+<li>ex2
+</ul>
+</span></pre>
+
+	<h2>JSON Formatted Response Example</h2>
+	<pre><span class=ig>
+Resource: http://...
+
+{{results}}
 </span></pre>
 
 {% endblock %}

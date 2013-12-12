@@ -20,7 +20,7 @@ def count(api_version):
 		resp['message'] =  'urls record count',
 		code = httplib.OK
 	except:
-		print ' * ' + __name__ + '.' + inspect.stack()[0][3] +  ' : datbase unavailable'
+		app.logger.debug(inspect.stack()[0][3] +  ' : datbase unavailable')
 		resp = get_response_template(httplib.SERVICE_UNAVAILABLE, 'error', None)
 		resp['message'] =  'malewaredb service unavailable',
 		resp['data'] = None
