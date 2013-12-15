@@ -7,9 +7,9 @@ from ishmael import app
 from ishmael.dbservice import get_mongodb_db_collection
 from ishmael.restservice import get_urlinfo
 from ishmael.utils import get_response_template, tailor_app_http_headers, make_qs_list, qs_sort
+from requests import codes
 
 import os
-import httplib
 import urlparse
 import re
 
@@ -47,7 +47,7 @@ def get_urlinfo_by_path(urlpath, **kwargs):
 @app.route('/urlinfo/<string:api_version>/search/<path:path>', methods = ['GET'])
 @tailor_app_http_headers
 def search_urlinfo_by_path(api_version, path):
-    if api_version not in app.config['API_VERSION_ACTIVE']: abort(httplib.NOT_FOUND)
+    if api_version not in app.config['API_VERSION_ACTIVE']: abort(codes.NOT_FOUND)
     rest_response, rest_response_code = get_urlinfo(api_version, get_urlinfo_by_path, path, qs=request.query_string, search=True)
 
     # return response as json with success status code in header
@@ -58,13 +58,13 @@ def search_urlinfo_by_path(api_version, path):
 @app.route('/urlinfo/<string:api_version>/search/', methods = ['GET'])
 def urlinfo_by_search_missing_data(api_version):
     # check if API version requested is active
-    if api_version not in app.config['API_VERSION_ACTIVE']: abort(httplib.NOT_FOUND)
+    if api_version not in app.config['API_VERSION_ACTIVE']: abort(codes.NOT_FOUND)
 
     # produce error response
-    rest_response = get_response_template(httplib.UNPROCESSABLE_ENTITY, 'fail', api_version)
+    rest_response = get_response_template(codes.UNPROCESSABLE_ENTITY, 'fail', api_version)
     rest_response['data'] = {'path' : 'url required: ' + request.path.rstrip('/') + '/<host:port>/<full_path>/<query_string>',
                              'message':'search for a general match on the URL host, port and path.  returns 0, 1 or many records.'}
 
     # return response as json with success status code in header
-    return make_response(jsonify(rest_response), httplib.UNPROCESSABLE_ENTITY)
+    return make_response(jsonify(rest_response), codes.UNPROCESSABLE_ENTITY)
 

@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from flask import redirect, url_for, jsonify, make_response
-import httplib
-
 from ishmael import app
 from ishmael.utils import get_response_template, tailor_app_http_headers
+from requests import codes
 
 # API Home: redirects to current version
 @app.route('/urlinfo', methods = ['GET'])
@@ -18,10 +17,10 @@ def redirect_urlinfo_current_api():
 @tailor_app_http_headers
 def get_urlinfo_home(api_version):
     # check if API version requested is active
-    if api_version not in app.config['API_VERSION_ACTIVE']: abort(httplib.NOT_FOUND)
+    if api_version not in app.config['API_VERSION_ACTIVE']: abort(codes.NOT_FOUND)
 
     # iniitialize restful response with common elements
-    rest_response = get_response_template(httplib.OK, 'success', api_version)
+    rest_response = get_response_template(codes.OK, 'success', api_version)
 
     # generate valid urls and instructions for accessing API
     rest_response['data'] = {'_links':[
@@ -36,4 +35,4 @@ def get_urlinfo_home(api_version):
         'message':'search for an exact match on the database id assigned to the URL.  returns 0 or 1 record.'}]}
 
     # return response as json with success status code in header
-    return make_response(jsonify(rest_response), httplib.OK)
+    return make_response(jsonify(rest_response), codes.OK)

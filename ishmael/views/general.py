@@ -5,10 +5,11 @@ from flask import render_template, jsonify, abort, request, url_for
 from ishmael import app
 from ishmael.restservice import get_urlinfo
 from ishmael.views import restapi_path
-import os
-import json
 from bson import BSON
 from bson import json_util
+from requests import codes
+import os
+import json
 
 @app.endpoint('index')
 @app.route('/')
@@ -38,5 +39,5 @@ def show_flask_config():
 						   'app.debug':app.debug}
 		return jsonify(config_response)
 	else:
-		abort(httplib.NOT_FOUND)
+		abort(codes.NOT_FOUND)
 

@@ -3,7 +3,7 @@
 from flask import make_response, jsonify, request, render_template
 from ishmael import app
 from ishmael.utils import get_response_template
-import httplib
+from requests import codes
 
 def request_wants_json():
 	best = request.accept_mimetypes.best_match(['application/json', 'text/html'])
@@ -11,18 +11,18 @@ def request_wants_json():
 			(best == 'application/json' and request.accept_mimetypes[best] > request.accept_mimetypes['text/html'])
 
 # HTTP 404 json response
-@app.errorhandler(httplib.NOT_FOUND)
+@app.errorhandler(codes.NOT_FOUND)
 def http_status_404(error=None):
 	if request_wants_json():
-		rest_response = get_response_template(httplib.NOT_FOUND, 'fail', None)
+		rest_response = get_response_template(codes.NOT_FOUND, 'fail', None)
 		rest_response['data'] = None
 		rest_response['message'] = error.name
-		return make_response(jsonify(rest_response), httplib.NOT_FOUND)
+		return make_response(jsonify(rest_response), codes.NOT_FOUND)
 	return render_template('404.html')
 
 # Create a class to handle API exceptions and produce json-worthy response
 class ApiExceptionIssue(Exception):
-    def __init__(self, status_code=httplib.BAD_REQUEST, status_type='fail', message=None, data=None):
+    def __init__(self, status_code=codes.BAD_REQUEST, status_type='fail', message=None, data=None):
         Exception.__init__(self)
         self.message = message
         self.data = data

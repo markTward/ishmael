@@ -4,16 +4,16 @@ from ishmael import app
 from ishmael.dbservice import get_mongodb_db_collection
 from ishmael.error import ApiExceptionIssue
 from ishmael.utils import get_response_template
-import httplib
 from bson.objectid import ObjectId
+from requests import codes
 
 # acquire url information from malware data sources
 def get_urlinfo(api_version, urlfunc, urlkey, **kwargs):
     try:
         urlcheck = urlfunc(urlkey, **kwargs)
-        rest_response = get_response_template(httplib.OK, 'success', api_version)
+        rest_response = get_response_template(codes.OK, 'success', api_version)
         rest_response['data'] = make_success_data(api_version, urlcheck)
-        return (rest_response, httplib.OK)
+        return (rest_response, codes.OK)
     except Exception as ex:
         except_type = type(ex).__name__
         except_info = {}
@@ -24,17 +24,17 @@ def get_urlinfo(api_version, urlfunc, urlkey, **kwargs):
         # try to raise a well-formatted jsend-like response based upon type of error
         if except_type in ['ConnectionFailure', 'AutoReconnect']:
             raise ApiExceptionIssue(status_type='error',
-                                  status_code=httplib.SERVICE_UNAVAILABLE,
+                                  status_code=codes.SERVICE_UNAVAILABLE,
                                   data={'args':ex.args} if app.config['DEBUG'] else None,
                                   message=except_type)
         elif except_type == 'InvalidId':
             raise ApiExceptionIssue(status_type='fail',
-                                  status_code=httplib.UNPROCESSABLE_ENTITY,
+                                  status_code=codes.UNPROCESSABLE_ENTITY,
                                   data={type(ex).__name__ : ex.args},
                                   message=except_info if app.config['DEBUG'] else None)
         else:
             raise ApiExceptionIssue(status_type='fail',
-                                  status_code=httplib.BAD_REQUEST,
+                                  status_code=codes.BAD_REQUEST,
                                   data=request.url,
                                   message=except_info if app.config['DEBUG'] else 'unknown issue with request')
 

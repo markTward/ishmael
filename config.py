@@ -8,7 +8,7 @@ class Config(object):
     # Flask App
     DEBUG = False
     TESTING = False
-    USE_SSLIFY = True
+    USE_SSLIFY = False
 
     # RESTful API settings
     API_VERSION_CURRENT = '1'

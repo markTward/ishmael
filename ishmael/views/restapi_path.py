@@ -7,9 +7,9 @@ from ishmael import app
 from ishmael.dbservice import get_mongodb_db_collection
 from ishmael.restservice import get_urlinfo
 from ishmael.utils import get_response_template, tailor_app_http_headers, make_qs_list, qs_sort
+from requests import codes
 
 import os
-import httplib
 import urlparse
 
 # search mongodb by netloc, path and/or query string
@@ -40,7 +40,7 @@ def get_urlinfo_by_path(urlpath, **kwargs):
 @app.route('/urlinfo/<string:api_version>/path/<path:path>', methods = ['GET'])
 @tailor_app_http_headers
 def find_urlinfo_by_path(api_version, path):    # check if API version requested is active
-    if api_version not in app.config['API_VERSION_ACTIVE']: abort(httplib.NOT_FOUND)
+    if api_version not in app.config['API_VERSION_ACTIVE']: abort(codes.NOT_FOUND)
     rest_response, rest_response_code = get_urlinfo(api_version, get_urlinfo_by_path, path, qs=request.query_string, search=False)
     return make_response(jsonify(rest_response), rest_response_code)
 
@@ -48,12 +48,12 @@ def find_urlinfo_by_path(api_version, path):    # check if API version requested
 @app.route('/urlinfo/<string:api_version>/path', methods = ['GET'])
 @app.route('/urlinfo/<string:api_version>/path/', methods = ['GET'])
 def urlinfo_by_path_missing_data(api_version):
-    if api_version not in app.config['API_VERSION_ACTIVE']: abort(httplib.NOT_FOUND)
+    if api_version not in app.config['API_VERSION_ACTIVE']: abort(codes.NOT_FOUND)
 
     # produce error response
-    rest_response = get_response_template(httplib.UNPROCESSABLE_ENTITY, 'fail', api_version)
+    rest_response = get_response_template(codes.UNPROCESSABLE_ENTITY, 'fail', api_version)
     rest_response['data'] = {'path' : 'url required: ' + request.path.rstrip('/') + '/<host:port>/<full_path>/<query_string>',
                              'message':'search for an exact match on the URL path and query string.  returns 0 or 1 record.'}
 
     # return response as json with success status code in header
-    return make_response(jsonify(rest_response), httplib.UNPROCESSABLE_ENTITY)
+    return make_response(jsonify(rest_response), codes.UNPROCESSABLE_ENTITY)
