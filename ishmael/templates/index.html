@@ -8,69 +8,65 @@
 
 {% block body %}
 	<h1>Ishmael</h1>
-	<h2>A Malware Identification Service</h2>
-	<blockquote>
-	Ishmael is a friendly malware identification service with a small collection of RESTful resources.
-	</blockquote>
+	<h2>Malware Identification Service</h2>
+
+	
+	<ul><strong>Ishmael is a friendly malware identification and research service with a small collection of RESTful resources:</strong>
+	<li><a href=#PATH>Match Using URL's Exact Path and Parameters</a>
+	<li><a href=#SEARCH>Search Across Partial Path and Parameters Pairs</a>
+	<li><a href=#ID>Find Record Using Ishmael Identifier</a>
+	</ul>
 
 	<p class=latestver>
 		<strong>API Current Version: 
 		<a href="{{ url_for('get_urlinfo_home', api_version=config['API_VERSION_CURRENT'])}}">{{config['API_VERSION_CURRENT']}}</a></strong>
 
-	<h2>Query Using Exact Path and Parameters</h2>
+	<h2><a name='PATH'>Match Using URL's Exact Path and Parameters</a></h2>
 	<pre><span class=ig>
-General Form:
+<strong>General Form:</strong>
 {{request.host_url.rstrip('/')}}{{url_for('find_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = '')}}[netloc/path?query_string]
 
-<ul>Definitions:
+<ul><strong>Definitions:</strong>
 <li>netloc is case-insensitive and includes host:port
 <li>path is case-sensitive
-<li>key=value parameters are case-sensitive and order independent
+<li>key=value parameters are case-sensitive and order independent</ul>
+<ul><strong>Example:</strong>
+<li><a href="{{request.host_url.rstrip('/')}}{{url_for('find_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = '')}}melville.io/helloishmael?call=me">{{request.host_url.rstrip('/')}}{{url_for('find_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path='')}}melville.io/helloishmael?call=me</a>
 </ul>
-
-<ul>Examples:
-<li><a href="{{request.host_url.rstrip('/')}}{{url_for('find_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = '')}}melville.io/helloishmael?call=me">Call Me Ishmael.</a>
-<li>ex2
-<li>ex3
-</ul>
-</span></pre>
-
-	<h2>Search Using Partial Path and Parameters</h2>
+</span>
+</pre>
+<br>
+	<h2><a name='SEARCH'>Search Across Partial Path and Parameters Pairs</a></h2>
 	<pre><span class=ig>
-General Form:
+<strong>General Form:</strong>
 {{request.host_url.rstrip('/')}}{{url_for('search_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = '')}}[netloc/path?query_string]
 
-<ul>Definitions:
+<ul><strong>Definitions:</strong>
 <li>netloc is case-insensitive and includes host and optionally port
 <li>path is case-sensitive and can be to any directory depth (optional)
-<li>key=value parameters are case-sensitive, order independent, and any number of pairs (optional)
-</ul>
-
-<ul>Examples:
-<li>ex1
-<li>ex2
-<li>ex3
+<li>key=value parameters are case-sensitive, order independent, and any number of pairs (optional)</li></ul>
+<ul><strong>Example:</strong>
+<li><a href="{{request.host_url.rstrip('/')}}{{url_for('search_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = 'melville.io')}}">{{request.host_url.rstrip('/')}}{{url_for('search_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = 'melville.io')}}</a>
 </ul>
 </span></pre>
-
-	<h2>Search Using Ishmael Identifier</h2>
+<br>
+	<h2><a name='ID'>Find Record Using Ishmael Identifier</a></h2>
 	<pre><span class=ig>
-General Form:
+<strong>General Form:</strong>
 {{request.host_url.rstrip('/')}}{{url_for('find_urlinfo_by_id', api_version=config['API_VERSION_CURRENT'], urlid = '')}}[id]
 
-<ul>Definitions:
+<ul><strong>Definitions:</strong>
 <li>id is provided via 'self' links when a query has matched an Ishmael record
-</ul>
 
-<ul>Examples:
-<li>ex1
-<li>ex2
+<ul><strong>Example:</strong>
+<li><a href="{{request.host_url.rstrip('/')}}{{url_for('find_urlinfo_by_id', api_version=config['API_VERSION_CURRENT'], urlid = '')}}{{ishmael_id}}">{{request.host_url.rstrip('/')}}{{url_for('find_urlinfo_by_id', api_version=config['API_VERSION_CURRENT'], urlid = '')}}{{ishmael_id}}</a>
 </ul>
 </span></pre>
+<br>
 
 	<h2>JSON Formatted Response Example</h2>
 	<pre><span class=ig>
-Resource: http://...
+Resource: {{request.host_url.rstrip('/')}}{{url_for('find_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = '')}}melville.io/helloishmael?call=me
 
 {{results}}
 </span></pre>

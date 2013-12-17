@@ -25,7 +25,7 @@ def index():
 			rest_response['type'] = type(ex).__name__
 			rest_response['module'] = type(ex).__module__
 	results = json.dumps(rest_response, sort_keys=True, indent=3, default=json_util.default)
-	return render_template('index.html', results=results)  
+	return render_template('index.html', results=results, ishmael_id=str(rest_response['data']['urls'][0]['_id']))  
 
 # Show Flask configuration vars. DEBUG ONLY!
 @app.route('/config')
