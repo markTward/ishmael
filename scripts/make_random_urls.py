@@ -23,21 +23,6 @@ def make_qs_list(qs):
 def qs_sort(qs):
     return ('&'.join(sorted(qs.split('&')))).strip('&')
 
-def make_url_array(url):
-    url_array = []
-    url_split = url.split('/')
-    url_depth = len(url_split)
-    for i in range(url_depth):
-        if i == 0:
-            url_array.append('/'.join(url_split))
-        else:
-            url_array.append(('/'.join(url_split) + '/'))
-
-        if len(url_split) == 1 and len(url_split[0].split(':')) == 2:
-            url_array.append(url_split[0].split(':')[0] + '/')
-        url_split.pop(-1)
-    return url_array
-
 client = MongoClient(app_config.MONGODB_URI)
 db = client[app_config.MONGODB_DB]
 
@@ -50,7 +35,7 @@ def id_gen_path(size=6, chars=unicode(string.ascii_letters + string.digits + '_-
 def id_gen_qs_val(size=6, chars=unicode(string.ascii_letters + string.digits +  u'åÅéÉîÎøØüÜ' + '!@#$%^&*() -_.,;:?=')):
     return ''.join(random.choice(chars) for x in range(size))
 
-def create_url(coll, netloc, path, qs, is_malware, cdate, vdate):
+def create_url(coll, netloc, path, qs, is_malware, cdate, vdate, source):
     # create mongo connection if none provided
     if coll == None:
         c = MongoClient()
@@ -77,7 +62,8 @@ def create_url(coll, netloc, path, qs, is_malware, cdate, vdate):
                 'path' : up.path,
                 'urlfull' : up.netloc.lower() + up.path,
                 'created' : cdate,
-                'is_malware' : is_malware}
+                'is_malware' : is_malware,
+                'source' : source}
 
     # create a hash for the qs in not null
     if qs != '':

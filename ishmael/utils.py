@@ -42,5 +42,6 @@ def get_app_message(key):
         'db_na' : 'data services unavailable at this time',
         'mongo_client_fail' : 'ERROR: MongoClient() not established',
         'mongo_client_success' : 'SUCCESS: MongoClient() established',
+        'except_unknown_issue' : 'unknown issue with request'
         }
     return app_messages.get(key)
