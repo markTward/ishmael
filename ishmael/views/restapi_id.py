@@ -4,7 +4,7 @@ from flask import jsonify, make_response, request
 from ishmael import app
 from ishmael.dbservice import get_mongodb_db_collection
 from ishmael.restservice import get_urlinfo
-from ishmael.utils import get_response_template, tailor_app_http_headers
+from ishmael.utils import get_response_template, tailor_app_http_headers, get_app_message
 from bson.objectid import ObjectId
 from requests import codes
 
@@ -33,7 +33,7 @@ def urlinfo_by_id_missing_data(api_version):
     # produce error response
     rest_response = get_response_template(codes.UNPROCESSABLE_ENTITY, 'fail', api_version)
     rest_response['data'] = {'id' : 'id required: ' + request.path.rstrip('/') + '/<id>',
-                             'message':'search for an exact match on the database id assigned to the URL.  returns 0 or 1 record.'}
+                             'message': get_app_message('id_api_desc')}
 
     # return response as json with success status code in header
     return make_response(jsonify(rest_response), codes.UNPROCESSABLE_ENTITY)

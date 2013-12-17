@@ -9,7 +9,9 @@ import datetime
 # utility function delivering restful response shell
 def get_response_template(code, status, api_version):
     response_template = {'code' : code, 'status': status }
-    response_template['metadata'] = {'api_version':api_version, 'response_timestamp':datetime.datetime.utcnow(), 'request':request.url}
+    response_template['metadata'] = {'api_version':api_version, 
+                                     'response_timestamp':datetime.datetime.utcnow(), 
+                                     'request':request.url}
     return response_template
 
 # produce an ordered list of query string key=value pairs suitable for mongodb multi-key indexing
@@ -30,3 +32,15 @@ def tailor_app_http_headers(f):
        return resp
     return update_wrapper(new_func, f)
 
+def get_app_message(key):
+    app_messages = {
+        'path_api_desc' : 'search for an exact match on the URL path and query string.  returns 0 or 1 record.',
+        'path_api_example' : '/<host:port>/<full_path>/<query_string>',
+        'search_api_desc' : 'search for a general match on the URL host, port and path.  returns 0, 1 or many records.',
+        'search_api_example' : '/<host:port>/<full_path>/<query_string>',
+        'id_api_desc' : 'search for an exact match on the database id assigned to the URL.  returns 0 or 1 record.',
+        'db_na' : 'data services unavailable at this time',
+        'mongo_client_fail' : 'ERROR: MongoClient() not established',
+        'mongo_client_success' : 'SUCCESS: MongoClient() established',
+        }
+    return app_messages.get(key)

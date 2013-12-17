@@ -6,9 +6,9 @@ from werkzeug import url_fix
 from ishmael import app
 from ishmael.dbservice import get_mongodb_db_collection
 from ishmael.restservice import get_urlinfo
-from ishmael.utils import get_response_template, tailor_app_http_headers, make_qs_list, qs_sort
+from ishmael.utils import (get_response_template, tailor_app_http_headers, 
+                           make_qs_list, qs_sort, get_app_message)
 from requests import codes
-
 import os
 import urlparse
 import re
@@ -33,10 +33,12 @@ def get_urlinfo_by_path(urlpath, **kwargs):
     if 'search' in kwargs and kwargs['search']:
         # open search
         if 'qs' in kwargs and len(kwargs['qs']) > 0:
-            app.logger.debug('search query ==> {urlfull : {$regex : /' + str(url_regx) + '/}, ' + 'qsLIST:{$all : ' + str(make_qs_list(kwargs['qs'])) + '}}')
+            app.logger.debug('search query ==> {urlfull : {$regex : /' + str(url_regx) + '/}, ' + 
+                             'qsLIST:{$all : ' + str(make_qs_list(kwargs['qs'])) + '}}')
 
             # positive match for any depth of url netloc, path and any number of query string members
-            record_set = url_coll.find({'urlfull' : {'$regex':url_regx}, 'qsLIST' : {'$all' :  make_qs_list(kwargs['qs'])}})
+            record_set = url_coll.find({'urlfull' : {'$regex':url_regx}, 
+                                        'qsLIST' : {'$all' :  make_qs_list(kwargs['qs'])}})
         else:
             app.logger.debug('search query ==> {urlfull : {$regex : /' + str(url_regx) + '/}}')
             # positive match for any depth of url netloc, path
@@ -48,7 +50,8 @@ def get_urlinfo_by_path(urlpath, **kwargs):
 @tailor_app_http_headers
 def search_urlinfo_by_path(api_version, path):
     if api_version not in app.config['API_VERSION_ACTIVE']: abort(codes.NOT_FOUND)
-    rest_response, rest_response_code = get_urlinfo(api_version, get_urlinfo_by_path, path, qs=request.query_string, search=True)
+    rest_response, rest_response_code = get_urlinfo(api_version, get_urlinfo_by_path, path, 
+                                                    qs=request.query_string, search=True)
 
     # return response as json with success status code in header
     return make_response(jsonify(rest_response), rest_response_code)
@@ -61,8 +64,8 @@ def urlinfo_by_search_missing_data(api_version):
 
     # produce error response
     rest_response = get_response_template(codes.UNPROCESSABLE_ENTITY, 'fail', api_version)
-    rest_response['data'] = {'path' : 'url required: ' + request.path.rstrip('/') + '/<host:port>/<full_path>/<query_string>',
-                             'message':'search for a general match on the URL host, port and path.  returns 0, 1 or many records.'}
+    rest_response['data'] = {'path' : 'url required: ' + request.path.rstrip('/') + get_app_message('search_api_example'),
+                             'message': get_app_message('search_api_desc')}
 
     # return response as json with success status code in header
     return make_response(jsonify(rest_response), codes.UNPROCESSABLE_ENTITY)

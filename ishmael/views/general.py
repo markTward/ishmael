@@ -5,6 +5,7 @@ from flask import render_template, jsonify, abort, request, url_for
 from ishmael import app
 from ishmael.restservice import get_urlinfo
 from ishmael.views import restapi_path
+from ishmael.utils import get_app_message
 from bson import BSON
 from bson import json_util
 from requests import codes
@@ -19,13 +20,16 @@ def index():
 			get_urlinfo(app.config['API_VERSION_CURRENT'], \
 			restapi_path.get_urlinfo_by_path, 'melville.io/helloishmael', qs='call=me', \
 			search=False)
+		ishmael_id=str(rest_response['data']['urls'][0]['_id'])
 	except Exception as ex:
-		rest_response = {'message' : 'our regrets, but there seems to be a problem'}
+		rest_response = {'message' : get_app_message('db_na')}
+		ishmael_id = ''
 		if app.config['DEBUG']:
 			rest_response['type'] = type(ex).__name__
 			rest_response['module'] = type(ex).__module__
+			
 	results = json.dumps(rest_response, sort_keys=True, indent=3, default=json_util.default)
-	return render_template('index.html', results=results, ishmael_id=str(rest_response['data']['urls'][0]['_id']))  
+	return render_template('index.html', results=results, ishmael_id=ishmael_id)  
 
 # Show Flask configuration vars. DEBUG ONLY!
 @app.route('/config')
