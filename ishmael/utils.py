@@ -29,3 +29,4 @@ def tailor_app_http_headers(f):
        resp.headers['Content-Language'] = app.config['DEFAULT_LANGUAGE']
        return resp
     return update_wrapper(new_func, f)
+

@@ -25,7 +25,6 @@ def find_urlinfo_by_id(api_version, urlid):
 	return make_response(jsonify(rest_response), rest_response_code)
 
 # Error response when no id is entered
-@app.route('/urlinfo/<string:api_version>/id', methods = ['GET'])
 @app.route('/urlinfo/<string:api_version>/id/', methods = ['GET'])
 def urlinfo_by_id_missing_data(api_version):
     # check if API version requested is active
@@ -33,7 +32,7 @@ def urlinfo_by_id_missing_data(api_version):
 
     # produce error response
     rest_response = get_response_template(codes.UNPROCESSABLE_ENTITY, 'fail', api_version)
-    rest_response['data'] = {'id' : 'id required: ' + request.path + '/<id>',
+    rest_response['data'] = {'id' : 'id required: ' + request.path.rstrip('/') + '/<id>',
                              'message':'search for an exact match on the database id assigned to the URL.  returns 0 or 1 record.'}
 
     # return response as json with success status code in header

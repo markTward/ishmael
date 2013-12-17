@@ -30,7 +30,7 @@ def get_urlinfo_by_path(urlpath, **kwargs):
     url_regx = '^' + re.escape(netloc + path)
     
     # query database
-    if 'search' in kwargs and kwargs['search'] == True:
+    if 'search' in kwargs and kwargs['search']:
         # open search
         if 'qs' in kwargs and len(kwargs['qs']) > 0:
             app.logger.debug('search query ==> {urlfull : {$regex : /' + str(url_regx) + '/}, ' + 'qsLIST:{$all : ' + str(make_qs_list(kwargs['qs'])) + '}}')
@@ -54,7 +54,6 @@ def search_urlinfo_by_path(api_version, path):
     return make_response(jsonify(rest_response), rest_response_code)
 
 # Error response when no search path is entered
-@app.route('/urlinfo/<string:api_version>/search', methods = ['GET'])
 @app.route('/urlinfo/<string:api_version>/search/', methods = ['GET'])
 def urlinfo_by_search_missing_data(api_version):
     # check if API version requested is active
