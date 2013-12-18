@@ -31,7 +31,7 @@ table        { border: 1px solid black; border-collapse: collapse;
                margin: 15px 0; }
 td, th       { border: 1px solid black; padding: 4px 10px;
                text-align: left; }
-th           { background: #eee; font-weight: normal; }
+th           { background: #eee; font-weight: strong; }
 
 td input     { border: none; padding: 0; }
 
