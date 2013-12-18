@@ -8,29 +8,38 @@
 
 {% block body %}
 	<h1>Ishmael</h1>
-	<h2>Malware Identification Service</h2>
-
-	
-	<ul><strong>Ishmael is a friendly malware identification and research service with a small collection of RESTful resources:</strong>
+	<h2>A Malware Identification Service</h2>
+	Ishmael is a friendly malware identification and research service with a 
+	small collection of RESTful resources.  Use them to check the status of an single URL or
+	search more broadly across a domain and path.
+	<p>
+	<ul><strong>RESTful Resources Available</strong>
 	<li><a href=#PATH>Match Using URL's Exact Path and Parameters</a>
 	<li><a href=#SEARCH>Search Across Partial Path and Parameters Pairs</a>
 	<li><a href=#ID>Find Record Using Ishmael Identifier</a>
 	</ul>
-
+	<p>
+	<ul><strong>JSON Response</strong>
+	<li><a href=#JSON_DEFINE>JSON Response Element Definitions</a>
+	<li><a href=#JSON_EXAMPLE>JSON Response Example</a>
+	</ul>
 	<p class=latestver>
 		<strong>API Current Version: 
 		<a href="{{ url_for('get_urlinfo_home', api_version=config['API_VERSION_CURRENT'])}}">{{config['API_VERSION_CURRENT']}}</a></strong>
 
 	<h2><a name='PATH'>Match Using URL's Exact Path and Parameters</a></h2>
 	<pre><span class=ig>
-<strong>General Form:</strong>
+<em>Purpose</em>
+Attempt an exact match of a URL's network location, path and query components against known malware sources.
+
+<em>General Form</em>
 {{request.host_url.rstrip('/')}}{{url_for('find_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = '')}}[netloc/path?query_string]
 
-<ul><strong>Definitions:</strong>
+<ul><em>Definitions</em>
 <li>netloc is case-insensitive and includes host:port
 <li>path is case-sensitive
-<li>key=value parameters are case-sensitive and order independent</ul>
-<ul><strong>Example:</strong>
+<li>query parameters are case-sensitive and order independent</ul>
+<ul><em>Example</em>
 <li><a href="{{request.host_url.rstrip('/')}}{{url_for('find_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = '')}}melville.io/helloishmael?call=me">{{request.host_url.rstrip('/')}}{{url_for('find_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path='')}}melville.io/helloishmael?call=me</a>
 </ul>
 </span>
@@ -38,53 +47,65 @@
 <br>
 	<h2><a name='SEARCH'>Search Across Partial Path and Parameters Pairs</a></h2>
 	<pre><span class=ig>
-<strong>General Form:</strong>
+<em>Purpose</em>
+Attempt to match a range of URLs over any depth of path and any combination of query parameters.
+
+<em>General Form</em>
 {{request.host_url.rstrip('/')}}{{url_for('search_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = '')}}[netloc/path?query_string]
 
-<ul><strong>Definitions:</strong>
+<ul><em>Definitions</em>
 <li>netloc is case-insensitive and includes host and optionally port
 <li>path is case-sensitive and can be to any directory depth (optional)
-<li>key=value parameters are case-sensitive, order independent, and any number of pairs (optional)</li></ul>
-<ul><strong>Example:</strong>
+<li>query parameters are case-sensitive, order independent, and any number of pairs (optional)</li></ul>
+<ul><em>Example</em>
 <li><a href="{{request.host_url.rstrip('/')}}{{url_for('search_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = 'melville.io')}}">{{request.host_url.rstrip('/')}}{{url_for('search_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = 'melville.io')}}</a>
+<li><a href="{{request.host_url.rstrip('/')}}{{url_for('search_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = 'melville.io')}}?a=b">{{request.host_url.rstrip('/')}}{{url_for('search_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = 'melville.io')}}?a=b</a>
+
 </ul>
 </span></pre>
 <br>
 	<h2><a name='ID'>Find Record Using Ishmael Identifier</a></h2>
 	<pre><span class=ig>
-<strong>General Form:</strong>
-{{request.host_url.rstrip('/')}}{{url_for('find_urlinfo_by_id', api_version=config['API_VERSION_CURRENT'], urlid = '')}}[id]
+<em>Purpose</em>
+Access a malware data record by an Id provided in a previous request.  Id is available as '_id' element in response.
 
-<ul><strong>Definitions:</strong>
-<li>id is provided via 'self' links when a query has matched an Ishmael record
+<em>General Form</em>
+{{request.host_url.rstrip('/')}}{{url_for('find_urlinfo_by_id', api_version=config['API_VERSION_CURRENT'], urlid = '')}}[_id]
 
-<ul><strong>Example:</strong>
+<ul><em>Definitions</em>
+<li>id is the unique database identifier.
+
+<ul><em>Example</em>
 <li><a href="{{request.host_url.rstrip('/')}}{{url_for('find_urlinfo_by_id', api_version=config['API_VERSION_CURRENT'], urlid = '')}}{{ishmael_id}}">{{request.host_url.rstrip('/')}}{{url_for('find_urlinfo_by_id', api_version=config['API_VERSION_CURRENT'], urlid = '')}}{{ishmael_id}}</a>
 </ul>
 </span></pre>
 <br>
-
-	<h2>JSON Formatted Response Example</h2>
+	<h2><a name='JSON_DEFINE'>JSON Response Definitions</a></h2>
 	<pre><span class=ig><table>
 <caption><strong>Response Element Descriptions</strong></caption>
 <strong><th colspan=3>Element</th><th>Description</th><th>Values</th></strong>
 <tr><th>Status<td colspan=2></td><td>Indicates success or failure of Api execution.<td>Success, Fail</td>
 <tr><th>Code<td colspan=2></td><td>HTTP Numeric Status Code</td><td>200, 422, 503, &c.</td></tr>
-<tr><th rowspan=7>Data<td colspan=2>record_count</td><td>Total number of records returned</td><td>Integers >= 0</td>
-<tr><td rowspan=6>urls</td><td>_id</td><td>URL Unique Identifier</td><td>BSON ObjectID</td>
+<tr><th rowspan=8>Data<td colspan=2>record_count</td><td>Total number of records returned</td><td>Integers >= 0</td>
+<tr><td rowspan=7>urls</td><td>_id</td><td>URL Unique Identifier</td><td>BSON ObjectID</td>
 <tr><td>is_in_database</td><td>Indicator if URL exists in database</td><td>True or False</td>
 <tr><td>is_malware</td><td>Indicator if URL is known to be malicious</td><td>True or False</td>
+<tr><td>_links</td><td>List of API links related to record including 'rel and 'href'</td><td>[Self, Home]</td>
 <tr><td>created</td><td>Date URL entered into database</td><td>ISO 8601 Date</td>
 <tr><td>verified</td><td>Last verification date for is_malware</td><td>ISO 8601 Date</td>
-<tr><td>url</td><td>User provided URL path and query parameters</td><td></td>
+<tr><td>url</td><td>Complete URL path with query parameters</td><td></td>
 <tr><th rowspan=4>Metadata<td colspan=2>api_version<td>Version of the API used</td><td>"1"</td>
 <tr><td colspan=2>request<td>Full path of the original request</td><td></td>
 <tr><td colspan=2>response_timestamp<td>Request submission timestamp</td><td>ISO 8601 Date</td>
 <tr><td colspan=2>server<td>Server ID</td><td></td>
 <tr><th colspan=3>Message<td>Used to communicate optional status or error information</td><td></td>
 </table>
+</span></pre>
+<br>
+	<h2><a name='JSON_EXAMPLE'>JSON Response Example</a></h2>
+	<pre><span class=ig>
 <strong>Resource: {{request.host_url.rstrip('/')}}{{url_for('find_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = '')}}melville.io/helloishmael?call=me</strong>
-
+	
 {{results}}
 </span></pre>
 
