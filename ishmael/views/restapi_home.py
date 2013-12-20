@@ -6,13 +6,11 @@ from ishmael.utils import get_response_template, tailor_app_http_headers, get_ap
 from requests import codes
 
 # API Home: redirects to current version
-@app.route('/urlinfo', methods = ['GET'])
 @app.route('/urlinfo/', methods = ['GET'])
 def redirect_urlinfo_current_api():
     return redirect(url_for('get_urlinfo_home', api_version = app.config['API_VERSION_CURRENT']))
 
 # API Current Version
-@app.route('/urlinfo/<string:api_version>', methods = ['GET'])
 @app.route('/urlinfo/<string:api_version>/', methods = ['GET'])
 @tailor_app_http_headers
 def get_urlinfo_home(api_version):

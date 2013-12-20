@@ -17,6 +17,9 @@ class Config(object):
 
     #HTTP Headers
     DEFAULT_LANGUAGE = 'en'
+    
+    #MongoDB
+    MONGODB_SERVER_ID = None
 
 class ConfigDev(Config):
     # Flask App
@@ -28,6 +31,7 @@ class ConfigDev(Config):
     MONGODB_URI = os.environ.get('ISHMAEL_MONGODB_URI', 'mongodb://localhost:27017/')
     MONGODB_DB = 'malwaredb'
     MONGODB_URLS = 'urls'
+    MONGODB_SERVER_ID = 'Kbr607MrEdx86Q=='
 
 class ConfigStg(Config):
     #Flask App
@@ -37,6 +41,7 @@ class ConfigStg(Config):
     MONGODB_URI = os.environ.get('MONGOHQ_URL')
     MONGODB_DB = 'app20251520'
     MONGODB_URLS = 'urls'
+    MONGODB_SERVER_ID = 'f2XHlkjkayYHWg=='
 
 class ConfigProd(Config):
     pass

@@ -17,9 +17,11 @@ if app.config['USE_SSLIFY']:
 
 #rules
 app.url_map.add(Rule('/index', endpoint='index'))
-app.url_map.add(Rule('/urlinfo/<string:api_version>/path', endpoint='urlinfo_by_path_missing_data'))
-app.url_map.add(Rule('/urlinfo/<string:api_version>/search', endpoint='urlinfo_by_search_missing_data'))
-app.url_map.add(Rule('/urlinfo/<string:api_version>/id', endpoint='urlinfo_by_id_missing_data'))
+app.url_map.add(Rule('/urlinfo', endpoint = 'redirect_urlinfo_current_api'))
+app.url_map.add(Rule('/urlinfo/<string:api_version>', endpoint = 'get_urlinfo_home'))
+app.url_map.add(Rule('/urlinfo/<string:api_version>/path', endpoint='missing_data_urlinfo_by_path'))
+app.url_map.add(Rule('/urlinfo/<string:api_version>/search', endpoint='missing_data_urlinfo_by_search'))
+app.url_map.add(Rule('/urlinfo/<string:api_version>/id', endpoint='missing_data_urlinfo_by_id'))
 
 # views
 from ishmael.views import general

@@ -12,7 +12,7 @@ def get_response_template(code, status, api_version):
     response_template['metadata'] = {'api_version':api_version, 
                                      'response_timestamp':datetime.datetime.utcnow(), 
                                      'request':request.url,
-                                     'server' : str(app.mdb_client.host) + ':' + str(app.mdb_client.port)}
+                                     'server' : app.config['MONGODB_SERVER_ID']}
     return response_template
 
 # produce an ordered list of query string key=value pairs suitable for mongodb multi-key indexing

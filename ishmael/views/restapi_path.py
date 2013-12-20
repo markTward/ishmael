@@ -51,7 +51,7 @@ def find_urlinfo_by_path(api_version, path):    # check if API version requested
 
 # Error response when no url path is entered
 @app.route('/urlinfo/<string:api_version>/path/', methods = ['GET'])
-def urlinfo_by_path_missing_data(api_version):
+def missing_data_urlinfo_by_path(api_version):
     if api_version not in app.config['API_VERSION_ACTIVE']: abort(codes.NOT_FOUND)
 
     # produce error response

@@ -26,7 +26,7 @@ def find_urlinfo_by_id(api_version, urlid):
 
 # Error response when no id is entered
 @app.route('/urlinfo/<string:api_version>/id/', methods = ['GET'])
-def urlinfo_by_id_missing_data(api_version):
+def missing_data_urlinfo_by_id(api_version):
     # check if API version requested is active
     if api_version not in app.config['API_VERSION_ACTIVE']: abort(codes.NOT_FOUND)
 
