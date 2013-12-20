@@ -4,8 +4,6 @@
 """
 import os
 
-_basedir = os.path.abspath(os.path.dirname(__file__))
-
 class Config(object):
     # Flask App
     DEBUG = False
@@ -33,7 +31,7 @@ class ConfigDev(Config):
     MONGODB_URI = os.environ.get('ISHMAEL_MONGODB_URI', 'mongodb://localhost:27017/')
     MONGODB_DB = 'malwaredb'
     MONGODB_URLS = 'urls'
-    MONGODB_SERVER_ID = 'Kbr607MrEdx86Q=='
+    MONGODB_SERVER_ID = 'Kbr607MrEdx86Q'
 
 class ConfigStg(Config):
     #Flask App
@@ -43,7 +41,7 @@ class ConfigStg(Config):
     MONGODB_URI = os.environ.get('MONGOHQ_URL')
     MONGODB_DB = 'app20251520'
     MONGODB_URLS = 'urls'
-    MONGODB_SERVER_ID = 'f2XHlkjkayYHWg=='
+    MONGODB_SERVER_ID = 'f2XHlkjkayYHWg'
 
 class ConfigProd(Config):
     pass
@@ -51,6 +49,7 @@ class ConfigProd(Config):
 class ConfigTest(Config):
     TESTING = True
     
+# eclipse    
 class ConfigPyDev(ConfigDev):
     DEBUG_WITH_APTANA = True
 
