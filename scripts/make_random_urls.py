@@ -1,28 +1,19 @@
 #i -*- coding: utf-8 -*-
+from import_utils import create_url
 from pymongo import MongoClient
-import random
+from werkzeug import url_fix
+import config
 import datetime
+import os
+import random
 import string
 import sys
-import os 
 import urllib
 import urlparse
-from werkzeug import url_fix
 
 # establish db client for current environment
 sys.path.append('..')
-import config
 app_config = getattr(config,os.environ['ISHMAEL_CONFIG'])
-
-# produce an ordered list of query string key=value pairs suitable for mongodb multi-key indexing
-def make_qs_list(qs):
-    pqs = urlparse.parse_qs(qs)
-    pqsl = [{k:sorted(v)} for k,v in sorted(pqs.items())]
-    return pqsl
-
-def qs_sort(qs):
-    return ('&'.join(sorted(qs.split('&')))).strip('&')
-
 client = MongoClient(app_config.MONGODB_URI)
 db = client[app_config.MONGODB_DB]
 
@@ -35,47 +26,7 @@ def id_gen_path(size=6, chars=unicode(string.ascii_letters + string.digits + '_-
 def id_gen_qs_val(size=6, chars=unicode(string.ascii_letters + string.digits +  u'åÅéÉîÎøØüÜ' + '!@#$%^&*() -_.,;:?=')):
     return ''.join(random.choice(chars) for x in range(size))
 
-def create_url(coll, netloc, path, qs, is_malware, cdate, vdate, source):
-    # create mongo connection if none provided
-    if coll == None:
-        c = MongoClient()
-        db = c.malwaredb
-        coll = db.urls
-
-    # set defaults if nothing provided
-    if cdate == None:
-        cdate = datetime.datetime.utcnow() - datetime.timedelta(days=random.choice(range(10,1000)))
-    if vdate == None:
-        vdate = cdate + datetime.timedelta(days=random.choice(range(1,100)))
-    if is_malware == None:
-        is_malware = random.choice([True,False])
-
-    iurl = 'http://' + netloc + path
-
-    if qs != '':
-        up = urlparse.urlsplit(url_fix(iurl + '?' + qs))
-    else:
-        up = urlparse.urlsplit(url_fix(iurl))
-
-    # prep a new pentry
-    newentry = {'netloc' : up.netloc.lower(),
-                'path' : up.path,
-                'urlfull' : up.netloc.lower() + up.path,
-                'created' : cdate,
-                'is_malware' : is_malware,
-                'source' : source}
-
-    # create a hash for the qs in not null
-    if qs != '':
-        newentry['qs'] = qs_sort(qs)
-        newentry['qsLIST'] = make_qs_list(qs)
-
-    # add verified and port if not null
-    if vdate < datetime.datetime.today(): newentry['verified'] = vdate
-
-    return coll.insert(newentry)
-
-def make_urls(n):
+def make_urls(n, source):
     rcount = 0
     for i in range(1,n):
         # fake a host
@@ -132,23 +83,26 @@ def make_urls(n):
                         else:
                             up = urlparse.urlsplit(url_fix(iurl))
 
-                        # add verified and port if not null
-                        if vdate < datetime.datetime.today(): newentry['verified'] = vdate
-
                         # insert the new record 
                         if (qs_dict == {} and not already_has_null_qs) or (qs_dict != {}):
-                            try:
-                                id = create_url(db.urls, up.netloc.lower(), up.path, qs_str, is_malware, cdate, vdate)
-                                already_has_null_qs = True
-                                rcount = rcount +  1
-                                if rcount % 10001 == 0: print rcount, id, iurl
-                                #print id, up.netloc.lower(), up.path, up.query
-                            except:
-                                print 'INSERT EXCEPTION ==>', newentry
+                            id = create_url(db.urls, up.netloc.lower(), up.path, qs_str, is_malware, cdate, vdate, source)
+                            already_has_null_qs = True
+                            rcount = rcount +  1
+                            if rcount % 10001 == 0: print rcount, id, iurl
+                            if n < 100: print id, up.netloc.lower(), up.path, up.query
+
     print 'total records ==>', rcount
 
 if __name__ == '__main__':
     if sys.argv[1] != None:
         n = int(sys.argv[1])
-        print 'make n ==>', n
-	make_urls(n)
+    else:
+        sys.exit()
+    
+    if sys.argv[2] != None:
+        source = sys.argv[2]
+    else:
+        source = None
+    
+    print 'make n, source ==>', n, source
+    make_urls(n, source)
