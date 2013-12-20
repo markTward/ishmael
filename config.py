@@ -43,8 +43,15 @@ class ConfigStg(Config):
     MONGODB_URLS = 'urls'
     MONGODB_SERVER_ID = 'f2XHlkjkayYHWg'
 
-class ConfigProd(Config):
-    pass
+class ConfigDemo(Config):
+    #Flask App
+    USE_SSLIFY = True
+
+    # Database service sources and settings
+    MONGODB_URI = os.environ.get('MONGOHQ_URL')
+    MONGODB_DB = 'app20546343'
+    MONGODB_URLS = 'urls'
+    MONGODB_SERVER_ID = '-2aBsUaw3Ej4CQ'
 
 class ConfigTest(Config):
     TESTING = True
