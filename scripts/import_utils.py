@@ -1,6 +1,7 @@
 from werkzeug import url_fix
 import datetime
 import urlparse
+import random
 
 # need access to main app & utilities
 import sys
