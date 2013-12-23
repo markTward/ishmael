@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+"""
+    run.py
+"""
 from ishmael import app
 
 if __name__ == "__main__":

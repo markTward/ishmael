@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
     ishmael_test.py
     Simple unit testing for ishmael service
@@ -6,7 +7,7 @@ import sys
 import unittest
 import os
 
-# ishmael modules
+# include ishmael modules
 sys.path.append('..')
 sys.path.append('../..')
 import config

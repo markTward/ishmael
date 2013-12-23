@@ -15,7 +15,7 @@ app.config.from_object(ishmael_config)
 if app.config['USE_SSLIFY']:
     sslify = SSLify(app)
 
-#rules
+# routing rules
 app.url_map.add(Rule('/index', endpoint='index'))
 app.url_map.add(Rule('/urlinfo', endpoint = 'redirect_urlinfo_current_api'))
 app.url_map.add(Rule('/urlinfo/<string:api_version>', endpoint = 'get_urlinfo_home'))
@@ -31,4 +31,5 @@ from ishmael.views import restapi_path
 from ishmael.views import restapi_search
 from ishmael.views import restapi_util
 
+# error handling
 from ishmael import error

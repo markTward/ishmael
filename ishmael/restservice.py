@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+"""
+    restservice.py
+    common functions across all RESTful endpoints
+"""
 from flask import url_for, make_response, jsonify, request
 from ishmael import app
 from ishmael.dbservice import get_mongodb_db_collection
@@ -7,7 +11,7 @@ from ishmael.utils import get_response_template, get_app_message
 from bson.objectid import ObjectId
 from requests import codes
 
-# acquire url information from malware data sources
+# acquire url information from authoritative malware data sources
 def get_urlinfo(api_version, urlfunc, urlkey, **kwargs):
     try:
         urlcheck = urlfunc(urlkey, **kwargs)

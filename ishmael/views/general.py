@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
-
+"""
+	general.py
+	malware service website pages not related to API
+"""
 
 from flask import render_template, jsonify, abort, request, url_for
 from ishmael import app
@@ -12,6 +15,7 @@ from requests import codes
 import os
 import json
 
+# home/index page
 @app.endpoint('index')
 @app.route('/')
 def index():

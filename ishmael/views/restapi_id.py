@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
-
+"""
+    restapi_id.py
+    record lookup by unique id
+"""
 from flask import jsonify, make_response, request
 from ishmael import app
 from ishmael.dbservice import get_mongodb_db_collection

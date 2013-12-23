@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
-
+"""
+    utils.py
+    common application-wide utilities
+"""
 from flask import request, make_response
 from ishmael import app
 from functools import update_wrapper
@@ -21,6 +24,7 @@ def make_qs_list(qs):
     pqsl = [{k:sorted(v)} for k,v in sorted(pqs.items())]
     return pqsl
     
+# produce a sorted query string matching index    
 def qs_sort(qs):
     return ('&'.join(sorted(qs.split('&')))).strip('&')
 
@@ -33,6 +37,7 @@ def tailor_app_http_headers(f):
        return resp
     return update_wrapper(new_func, f)
 
+# placeholder for reusable application-wide messages and text
 def get_app_message(key):
     app_messages = {
         'path_api_desc' : 'search for an exact match on the URL path and query string.  returns 0 or 1 record.',

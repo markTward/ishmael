@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+"""
+    restapi_home.py
+    API home page showing endpoints in JSON
+"""
 
 from flask import redirect, url_for, jsonify, make_response
 from ishmael import app

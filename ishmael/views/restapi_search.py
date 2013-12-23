@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
-
+"""
+    restapi_search.py
+    record lookup by partial path and any combination 
+    of query string parameters
+"""
 from flask import jsonify, make_response, request
 from werkzeug import url_fix
 

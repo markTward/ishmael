@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
-
+"""
+    restapi_path.py
+    record lookup by unique path and query parameters
+"""
 from flask import jsonify, make_response, request
 from werkzeug import url_fix
 

@@ -1,10 +1,15 @@
 # -*- coding: utf-8 -*-
+"""
+	error.py
+	application error handling
+"""
 
 from flask import make_response, jsonify, request, render_template
 from ishmael import app
 from ishmael.utils import get_response_template
 from requests import codes
 
+# attempt to determine best type of response
 def request_wants_json():
 	best = request.accept_mimetypes.best_match(['application/json', 'text/html'])
 	return (len(request.accept_mimetypes.values()) == 1 and request.accept_mimetypes.values()[0] == '*/*') or \

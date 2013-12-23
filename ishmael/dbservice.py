@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+"""
+	dbservice.py
+	application-wide database services
+"""
 import inspect
 from pymongo import MongoClient
 from ishmael import app

@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
-
-import inspect
-
+"""
+    restapi_util.py
+"""
 from flask import jsonify, make_response, request
-
 from ishmael import app
 from ishmael.dbservice import get_mongodb_db_collection
 from ishmael.utils import get_response_template, tailor_app_http_headers, get_app_message
 from bson.objectid import ObjectId
 from requests import codes
+import inspect
 
 @app.route('/urlinfo/<string:api_version>/count', methods = ['GET'])
 def count(api_version):
