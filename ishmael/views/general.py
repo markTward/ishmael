@@ -8,7 +8,7 @@ from flask import render_template, jsonify, abort, request, url_for
 from ishmael import app
 from ishmael.restservice import get_urlinfo
 from ishmael.views import restapi_path
-from ishmael.utils import get_app_message
+from ishmael.utils import get_app_message, get_app_scheme
 from bson import BSON
 from bson import json_util
 from requests import codes
@@ -33,7 +33,7 @@ def index():
 			rest_response['module'] = type(ex).__module__
 			
 	results = json.dumps(rest_response, sort_keys=True, indent=3, default=json_util.default)
-	return render_template('index.html', results=results, ishmael_id=ishmael_id)  
+	return render_template('index.html', scheme=get_app_scheme(), results=results, ishmael_id=ishmael_id)  
 
 # Show Flask configuration vars. DEBUG ONLY!
 @app.route('/config')

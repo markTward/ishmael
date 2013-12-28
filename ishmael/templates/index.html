@@ -25,7 +25,7 @@
 	</ul>
 	<p class=latestver>
 		<strong>API Current Version: 
-		<a href="{{ url_for('get_urlinfo_home', api_version=config['API_VERSION_CURRENT'])}}">{{config['API_VERSION_CURRENT']}}</a></strong>
+		<a href="{{ url_for('get_urlinfo_home', api_version=config['API_VERSION_CURRENT'], _external = True, _scheme=scheme)}}">{{config['API_VERSION_CURRENT']}}</a></strong>
 
 	<h2><a name='PATH'>Match Using URL's Exact Path and Parameters</a></h2>
 	<pre><span class=ig>
@@ -33,14 +33,14 @@
 Attempt an exact match of a URL's network location, path and query components against known malware sources.
 
 <em>General Form</em>
-{{request.host_url.rstrip('/')}}{{url_for('find_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = '')}}[netloc/path?query_string]
+{{url_for('find_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = '', _external = True, _scheme=scheme)}}[netloc/path?query_string]
 
 <ul><em>Definitions</em>
 <li>netloc is case-insensitive and includes host:port
 <li>path is case-sensitive
 <li>query parameters are case-sensitive and order independent</ul>
 <ul><em>Example</em>
-<li><a href="{{request.host_url.rstrip('/')}}{{url_for('find_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = '')}}melville.io/helloishmael?call=me">{{request.host_url.rstrip('/')}}{{url_for('find_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path='')}}melville.io/helloishmael?call=me</a>
+<li><a href="{{url_for('find_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = '', _external = True, _scheme=scheme)}}melville.io/helloishmael?call=me">{{url_for('find_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path='', _external = True, _scheme=scheme)}}melville.io/helloishmael?call=me</a>
 </ul>
 </span>
 </pre>
@@ -51,15 +51,15 @@ Attempt an exact match of a URL's network location, path and query components ag
 Attempt to match a range of URLs over any depth of path and any combination of query parameters.
 
 <em>General Form</em>
-{{request.host_url.rstrip('/')}}{{url_for('search_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = '')}}[netloc/path?query_string]
+{{url_for('search_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = '', _external = True, _scheme=scheme)}}[netloc/path?query_string]
 
 <ul><em>Definitions</em>
 <li>netloc is case-insensitive and includes host and optionally port
 <li>path is case-sensitive and can be to any directory depth (optional)
 <li>query parameters are case-sensitive, order independent, and any number of pairs (optional)</li></ul>
 <ul><em>Example</em>
-<li><a href="{{request.host_url.rstrip('/')}}{{url_for('search_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = 'melville.io')}}">{{request.host_url.rstrip('/')}}{{url_for('search_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = 'melville.io')}}</a>
-<li><a href="{{request.host_url.rstrip('/')}}{{url_for('search_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = 'melville.io')}}?a=b">{{request.host_url.rstrip('/')}}{{url_for('search_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = 'melville.io')}}?a=b</a>
+<li><a href="{{url_for('search_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = 'melville.io', _external = True, _scheme=scheme)}}">{{url_for('search_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = 'melville.io', _external = True, _scheme=scheme)}}</a>
+<li><a href="{{url_for('search_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = 'melville.io', _external = True, _scheme=scheme)}}?a=b">{{url_for('search_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = 'melville.io', _external = True, _scheme=scheme)}}?a=b</a>
 
 </ul>
 </span></pre>
@@ -70,13 +70,13 @@ Attempt to match a range of URLs over any depth of path and any combination of q
 Access a malware data record by an Id provided in a previous request.  Id is available as '_id' element in response.
 
 <em>General Form</em>
-{{request.host_url.rstrip('/')}}{{url_for('find_urlinfo_by_id', api_version=config['API_VERSION_CURRENT'], urlid = '')}}[_id]
+{{url_for('find_urlinfo_by_id', api_version=config['API_VERSION_CURRENT'], urlid = '', _external = True, _scheme=scheme)}}[_id]
 
 <ul><em>Definitions</em>
 <li>id is the unique database identifier.
 
 <ul><em>Example</em>
-<li><a href="{{request.host_url.rstrip('/')}}{{url_for('find_urlinfo_by_id', api_version=config['API_VERSION_CURRENT'], urlid = '')}}{{ishmael_id}}">{{request.host_url.rstrip('/')}}{{url_for('find_urlinfo_by_id', api_version=config['API_VERSION_CURRENT'], urlid = '')}}{{ishmael_id}}</a>
+<li><a href="{{url_for('find_urlinfo_by_id', api_version=config['API_VERSION_CURRENT'], urlid = '', _external = True, _scheme=scheme)}}{{ishmael_id}}">{{url_for('find_urlinfo_by_id', api_version=config['API_VERSION_CURRENT'], urlid = '', _external = True, _scheme=scheme)}}{{ishmael_id}}</a>
 </ul>
 </span></pre>
 <br>
@@ -104,7 +104,7 @@ Access a malware data record by an Id provided in a previous request.  Id is ava
 <br>
 	<h2><a name='JSON_EXAMPLE'>JSON Response Example</a></h2>
 	<pre><span class=ig>
-<strong>Resource: {{request.host_url.rstrip('/')}}{{url_for('find_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = '')}}melville.io/helloishmael?call=me</strong>
+<strong>Resource: {{url_for('find_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = '', _external = True, _scheme=scheme)}}melville.io/helloishmael?call=me</strong>
 	
 {{results}}
 </span></pre>

@@ -7,7 +7,7 @@ from flask import url_for, make_response, jsonify, request
 from ishmael import app
 from ishmael.dbservice import get_mongodb_db_collection
 from ishmael.error import ApiExceptionIssue
-from ishmael.utils import get_response_template, get_app_message
+from ishmael.utils import get_response_template, get_app_message, get_app_scheme
 from bson.objectid import ObjectId
 from requests import codes
 
@@ -64,11 +64,13 @@ def make_success_data(version, record_set):
 			    newurl['url'] = r['netloc'] + r['path']
 			# add api home and internal id/self links
 			newurl['_links'] = [{'rel' : 'home', 
-                                 'href' : url_for('get_urlinfo_home', api_version = version, _external = True)}]
+                                 'href' : url_for('get_urlinfo_home', api_version = version, 
+                                                  _external = True, _scheme=get_app_scheme())}]
             
 			newurl['_links'].append({'rel' : 'self', 
                                      'href' : url_for('find_urlinfo_by_id', api_version = version, 
-                                                      urlid = str(r['_id']), _external = True)})
+                                                      urlid = str(r['_id']), _external = True, 
+                                                      _scheme=get_app_scheme())})
             
 			# flag record found in db
 			newurl['is_in_database'] = True
@@ -80,7 +82,8 @@ def make_success_data(version, record_set):
 		data['is_in_database'] = False
 		# provide link to API home
 		data['_links'] = [{'rel' : 'home', 
-                           'href' : url_for('get_urlinfo_home', api_version = version, _external = True)}]
+                           'href' : url_for('get_urlinfo_home', api_version = version, 
+                                            _external = True, _scheme=get_app_scheme())}]
 
 	return data
 
