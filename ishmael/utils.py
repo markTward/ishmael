@@ -54,4 +54,4 @@ def get_app_message(key):
 
 # return default scheme for app: http / https
 def get_app_scheme():
-    return 'https' if ('USE_SSLIFY' in app.config and app.config['USE_SSLIFY']) == True else 'http'
+    return 'https' if ('USE_SSLIFY' in app.config and app.config['USE_SSLIFY']) else 'http'
