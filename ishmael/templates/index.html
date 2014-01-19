@@ -10,12 +10,12 @@
 	<h1>Ishmael</h1>
 	<h2>A Malware Identification Service</h2>
 	Ishmael is a friendly malware identification and research service with a 
-	small collection of RESTful resources.  Use them to check the status of an single URL or
+	small collection of RESTful resources.  Use them to check the status of a single URL or
 	search more broadly across a domain and path.
 	<p>
 	<ul><strong>RESTful Resources Available</strong>
 	<li><a href=#PATH>Match Using URL's Exact Path and Parameters</a>
-	<li><a href=#SEARCH>Search Across Partial Path and Parameters Pairs</a>
+	<li><a href=#SEARCH>Search Across Partial Path and Parameter Pairs</a>
 	<li><a href=#ID>Find Record Using Ishmael Identifier</a>
 	</ul>
 	<p>
@@ -30,7 +30,7 @@
 	<h2><a name='PATH'>Match Using URL's Exact Path and Parameters</a></h2>
 	<pre><span class=ig>
 <em>Purpose</em>
-Attempt an exact match of a URL's network location, path and query components against known malware sources.
+Attempt an exact match of a URL's network location, path and query string parameters against known malware sources.
 
 <em>General Form</em>
 {{url_for('find_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = '', _external = True, _scheme=scheme)}}[netloc/path?query_string]
@@ -38,17 +38,17 @@ Attempt an exact match of a URL's network location, path and query components ag
 <ul><em>Definitions</em>
 <li>netloc is case-insensitive and includes host:port
 <li>path is case-sensitive
-<li>query parameters are case-sensitive and order independent</ul>
+<li>query string parameters are case-sensitive and order independent</ul>
 <ul><em>Example</em>
 <li><a href="{{url_for('find_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = '', _external = True, _scheme=scheme)}}melville.io/helloishmael?call=me">{{url_for('find_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path='', _external = True, _scheme=scheme)}}melville.io/helloishmael?call=me</a>
 </ul>
 </span>
 </pre>
 <br>
-	<h2><a name='SEARCH'>Search Across Partial Path and Parameters Pairs</a></h2>
+	<h2><a name='SEARCH'>Search Across Partial Path and Parameter Pairs</a></h2>
 	<pre><span class=ig>
 <em>Purpose</em>
-Attempt to match a range of URLs over any depth of path and any combination of query parameters.
+Attempt to match a range of URLs over any depth of path and any combination of query string parameters.
 
 <em>General Form</em>
 {{url_for('search_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = '', _external = True, _scheme=scheme)}}[netloc/path?query_string]
@@ -56,7 +56,7 @@ Attempt to match a range of URLs over any depth of path and any combination of q
 <ul><em>Definitions</em>
 <li>netloc is case-insensitive and includes host and optionally port
 <li>path is case-sensitive and can be to any directory depth (optional)
-<li>query parameters are case-sensitive, order independent, and any number of pairs (optional)</li></ul>
+<li>query string parameters are case-sensitive, order independent, and may include any number of pairs (optional)</li></ul>
 <ul><em>Example</em>
 <li><a href="{{url_for('search_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = 'melville.io', _external = True, _scheme=scheme)}}">{{url_for('search_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = 'melville.io', _external = True, _scheme=scheme)}}</a>
 <li><a href="{{url_for('search_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = 'melville.io', _external = True, _scheme=scheme)}}?a=b">{{url_for('search_urlinfo_by_path', api_version=config['API_VERSION_CURRENT'], path = 'melville.io', _external = True, _scheme=scheme)}}?a=b</a>
@@ -67,13 +67,13 @@ Attempt to match a range of URLs over any depth of path and any combination of q
 	<h2><a name='ID'>Find Record Using Ishmael Identifier</a></h2>
 	<pre><span class=ig>
 <em>Purpose</em>
-Access a malware data record by an Id provided in a previous request.  Id is available as '_id' element in response.
+Directy access a malware record using an identifier learned from a previous response.
 
 <em>General Form</em>
 {{url_for('find_urlinfo_by_id', api_version=config['API_VERSION_CURRENT'], urlid = '', _external = True, _scheme=scheme)}}[_id]
 
 <ul><em>Definitions</em>
-<li>id is the unique database identifier.
+<li>_id is the unique database identifier.
 
 <ul><em>Example</em>
 <li><a href="{{url_for('find_urlinfo_by_id', api_version=config['API_VERSION_CURRENT'], urlid = '', _external = True, _scheme=scheme)}}{{ishmael_id}}">{{url_for('find_urlinfo_by_id', api_version=config['API_VERSION_CURRENT'], urlid = '', _external = True, _scheme=scheme)}}{{ishmael_id}}</a>
@@ -89,10 +89,10 @@ Access a malware data record by an Id provided in a previous request.  Id is ava
 <tr><td rowspan=7>urls</td><td>_id</td><td>URL Unique Identifier</td><td>BSON ObjectID</td>
 <tr><td>is_in_database</td><td>Indicator if URL exists in database</td><td>True or False</td>
 <tr><td>is_malware</td><td>Indicator if URL is known to be malicious</td><td>True or False</td>
-<tr><td>_links</td><td>List of API links related to record including 'rel and 'href'</td><td>[Self, Home]</td>
+<tr><td>_links</td><td>List of API links related to record including 'rel' and 'href'</td><td>[Self, Home]</td>
 <tr><td>created</td><td>Date URL entered into database</td><td>ISO 8601 Date</td>
 <tr><td>verified</td><td>Last verification date for is_malware</td><td>ISO 8601 Date</td>
-<tr><td>url</td><td>Complete URL path with query parameters</td><td></td>
+<tr><td>url</td><td>Complete URL path with query string parameters</td><td></td>
 <tr><th>Message<td colspan=2></td><td>Provides optional status or error information</td><td></td>
 <tr><th rowspan=4>Metadata<td colspan=2>api_version<td>Version of the API used</td><td>"1"</td>
 <tr><td colspan=2>request<td>Full path of the original request</td><td></td>
