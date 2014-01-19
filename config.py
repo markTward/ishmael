@@ -64,5 +64,3 @@ class ConfigPyDev(ConfigDev):
 class ConfigDevFm(ConfigDev):
     DEBUG = False
 
-del os
-
