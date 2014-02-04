@@ -1,0 +1,37 @@
+[
+	{
+		"v" : 1,
+		"key" : {
+			"_id" : 1
+		},
+		"ns" : "malwaredb.urls",
+		"name" : "_id_"
+	},
+	{
+		"v" : 1,
+		"key" : {
+			"netloc" : 1,
+			"path" : 1,
+			"qs" : 1
+		},
+		"unique" : true,
+		"ns" : "malwaredb.urls",
+		"name" : "netloc_1_path_1_qs_1"
+	},
+	{
+		"v" : 1,
+		"key" : {
+			"urlfull" : 1
+		},
+		"ns" : "malwaredb.urls",
+		"name" : "urlfull_1"
+	},
+	{
+		"v" : 1,
+		"key" : {
+			"qsLIST" : 1
+		},
+		"ns" : "malwaredb.urls",
+		"name" : "qsLIST_1"
+	}
+]
