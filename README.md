@@ -7,10 +7,10 @@ Ishmael is a friendly malware identification and research service with a small c
 * Find Record Using Known Ishmael Identifier
 
 ### Demonstration
-You can try out Ishmael and learn more about the service at this URL:
+You can try out Ishmael and learn more about the service at this URL:  
 [https://ishmael-demo.herokuapp.com/](https://ishmael-demo.herokuapp.com/)
 
-You can interact with the service directly from the browser or from the command line using curl.  Here's an example:
+You can interact with the service directly from the browser or from the command line using curl.  Here's an example:  
 `curl -i https://ishmael-demo.herokuapp.com/urlinfo/1/path/melville.io/helloishmael?call=me`
 
 The small Heroku deployment may need to awaken upon the first home page access or query, but subsequent ones should be well covered by the database indexes and perform well.
