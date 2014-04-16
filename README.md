@@ -1,5 +1,5 @@
 # Welcome to Ishmael!
-Ishmael is a friendly malware identification and research service with a small collection of RESTful resources. Use them to check the status of a single URL or search more broadly across a domain and path.
+Ishmael is a prototype for a friendly malware identification and research service with a small collection of RESTful resources. Use them to check the status of a single URL or search more broadly across a domain and path.
 
 ## RESTful Resources Available
 * Match Using URL's Exact Path and Parameters
@@ -13,7 +13,7 @@ You can try out Ishmael and learn more about the service at this URL:
 You can interact with the service directly from the browser or from the command line using curl.  Here's an example:  
 `curl -i https://ishmael-demo.herokuapp.com/urlinfo/1/path/melville.io/helloishmael?call=me`
 
-The small Heroku deployment may need to awaken upon the first home page access or query, but subsequent ones should be well covered by the database indexes and perform well.
+The small Heroku deployment may need to awaken upon the first home page or query access, but subsequent attempts should be well covered by the database indexes and perform crisply.
 
 ## Some Details
 I've implemented Ishmael using Python and Flask to provide the core of the RESTful API, utilizing MongoDB as the datastore.
