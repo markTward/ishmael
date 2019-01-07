@@ -1,3 +1,9 @@
+# no automated method for creating multiple indexes (this version mongo).  use db.malewaredb.createIndex({...}) for each one.
+# db.malwaredb.createIndex({netloc : 1,path : 1,qs : 1}, {unique:true})
+# db.malwaredb.createIndex({urlfull : 1})
+# db.malwaredb.createIndex({qsLIST : 1}))
+
+# result of db.malwaredb.getIndexes() 
 [
 	{
 		"v" : 1,
