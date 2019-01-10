@@ -17,13 +17,19 @@ app_config = getattr(config,os.environ['ISHMAEL_CONFIG'])
 client = MongoClient(app_config.MONGODB_URI)
 db = client[app_config.MONGODB_DB]
 
+print app_config
+print client
+print db
+
 def id_gen_basic(size=6, chars=unicode(string.ascii_letters + string.digits + '_-')):
     return ''.join(random.choice(chars) for x in range(size))
 
-def id_gen_path(size=6, chars=unicode(string.ascii_letters + string.digits + '_-' + u'åÅéÉîÎøØüÜ')):
+#def id_gen_path(size=6, chars=unicode(string.ascii_letters + string.digits + '_-' + u'åÅéÉîÎøØüÜ')):
+def id_gen_path(size=6, chars=unicode(string.ascii_letters + string.digits + '_-')):
     return ''.join(random.choice(chars) for x in range(size))
 
-def id_gen_qs_val(size=6, chars=unicode(string.ascii_letters + string.digits +  u'åÅéÉîÎøØüÜ' + '!@#$%^&*() -_.,;:?=')):
+#def id_gen_qs_val(size=6, chars=unicode(string.ascii_letters + string.digits +  u'åÅéÉîÎøØüÜ' + '!@#$%^&*() -_.,;:?=')):
+def id_gen_qs_val(size=6, chars=unicode(string.ascii_letters + string.digits + '_-')):
     return ''.join(random.choice(chars) for x in range(size))
 
 def make_urls(n, source):
@@ -94,6 +100,7 @@ def make_urls(n, source):
     print 'total records ==>', rcount
 
 if __name__ == '__main__':
+    print sys.argv
     if sys.argv[1] != None:
         n = int(sys.argv[1])
     else:
